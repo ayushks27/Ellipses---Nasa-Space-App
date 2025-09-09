@@ -1,26 +1,612 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; 
+}
+/* Dashboard Styles */
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+  font-family: "Georgia, Arial, sans-serif";
+  position: relative;
+  -webkit-overflow-scrolling: touch; 
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 280px;
+  background: linear-gradient(135deg, #111, #000);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #333;
+  overflow-y: auto;
+}
+
+.logo {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid #333;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+}
+
+.logo i {
+  color: #4ca1af;
+}
+
+.menu {
+  padding: 0 10px;
+  margin-bottom: 30px;
+}
+
+.menu-item {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+  color: #ccc;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+}
+
+.menu-item:hover, .menu-item.active {
+  background: #222;
+  color: #fff;
+}
+
+.menu-item i {
+  width: 20px;
+  text-align: center;
+}
+
+.operations {
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+.operations h3 {
+  margin-bottom: 15px;
+  font-weight: 500;
+  font-size: 18px;
+  color: #fff;
+}
+
+.operation-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.op-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  background: #222;
+  color: #ccc;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+  touch-action: manipulation; /* Improve touch responsiveness */
+}
+
+.op-btn:hover {
+  background: #333;
+  color: #fff;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #000;
+  padding-top: 80px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.header {
+  padding: 10px 0;
+}
+
+.header h2 {
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+}
+
+.output-container {
+  background: #111;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; 
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  min-width: 600px;
+}
+
+.table-container th, 
+.table-container td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+  color: #fff;
+}
+
+.table-container th {
+  background-color: #222;
+  font-weight: 600;
+}
+
+.table-container tr:hover {
+  background-color: rgba(248, 249, 250, 0.15);
+  transition: background-color 0.2s ease;
+}
+
+/* Graph Styles */
+.graph-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.bar-graph {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 30px;
+  height: 300px;
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  margin-top: 20px;
+  background: #0a0a0a;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; 
+}
+
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.bar {
+  width: 50px;
+  background: linear-gradient(to top, #4ca1af, #2c3e50);
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.bar-label {
+  font-size: 12px;
+  text-align: center;
+  color: #ccc;
+}
+
+.output-container p {
+  padding: 20px;
+  font-size: 16px;
+  text-align: center;
+  color: #ccc;
+  margin: 0;
+}
+
+@media (max-width: 992px) {
+  .dashboard {
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .sidebar {
+    width: 100%;
+    padding: 15px;
+    max-height: 40vh;
+    border-right: none;
+    border-bottom: 1px solid #333;
+  }
+  
+  .operation-buttons {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .op-btn {
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+  }
+  
+  .main-content {
+    padding-top: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .bar-graph {
+    gap: 15px;
+    padding: 10px;
+    height: 250px;
+  }
+  
+  .bar {
+    width: 40px;
+  }
+  
+  /* Improve touch targets for mobile */
+  .menu-item, .op-btn {
+    padding: 16px;
+    min-height: 44px; /* Minimum touch target size for iOS */
+  }
+  
+  /* Ensure search bar doesn't overlap content on mobile */
+  .main-content {
+    padding-top: 70px;
+  }
+  
+  /* Prevent zoom on input focus for iOS */
+  @media (max-width: 980px) {
+    select, textarea, input[type="text"] {
+      font-size: 16px !important; /* Prevents zoom on focus in iOS */
+    }
+  }
+}
+
+/* Small Mobile Devices (Phones) */
+@media (max-width: 480px) {
+  .sidebar {
+    max-height: 35vh;
+    padding: 10px;
+  }
+  
+  .main-content {
+    max-height: 65vh;
+    padding: 15px;
+    padding-top: 70px; 
+  }
+  
+  .output-container {
+    padding: 15px;
+  }
+  
+  .bar {
+    width: 30px;
+  }
+  
+  .bar-graph {
+    gap: 10px;
+    height: 200px;
+    padding: 10px 5px;
+  }
+  
+  .operation-buttons {
+    gap: 8px;
+  }
+  
+  .op-btn {
+    min-width: 100px;
+    padding: 12px 8px;
+    font-size: 14px;
+  }
+  
+  .op-btn i {
+    font-size: 14px;
+  }
+  
+  .menu-item {
+    padding: 12px 10px;
+  }
+  
+  /* Adjust table for very small screens */
+  .table-container th, 
+  .table-container td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  
+  .logo {
+    font-size: 20px;
+    padding: 0 15px 15px;
+  }
+}
+
+/* iOS Specific Adjustments */
+@supports (-webkit-touch-callout: none) {
+  .dashboard {
+    height: -webkit-fill-available; /* Better mobile Safari support */
+  }
+  
+  .sidebar, .main-content {
+    max-height: -webkit-fill-available;
+  }
+}
+
+@media (max-height: 700px) and (max-width: 768px) {
+  .sidebar {
+    max-height: 35vh;
+  }
+  
+  .main-content {
+    max-height: 65vh;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.nasa-data-container {
+  padding: 20px;
+}
+        
+.apod-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.apod-image img {
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+}
+
+.apod-details {
+  padding: 20px;
+  background: #1a1a1a;
+}
+
+.apod-details h4 {
+  margin-top: 0;
+  color: #4ca1af;
+}
+
+.date {
+  color: #888;
+  font-size: 0.9em;
+}
+
+.copyright {
+  font-style: italic;
+  color: #666;
+}
+
+.real-time-table {
+  margin-top: 20px;
+  overflow-y: auto;
+}
+
+.real-time-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.real-time-table th, 
+.real-time-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+  color: #fff;
+}
+
+.real-time-table th {
+  background-color: #222;
+  font-weight: 600;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+}
+
+.error {
+  color: #ff6b6b;
+}
+
+.op-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* For laptop/desktop screens (typically 1024px and above) */
+@media (min-width: 1024px) {
+  .nasa-data-container {
+    max-height: 65vh; /* Slightly less height on larger screens */
+  }
+  
+  .apod-image img {
+    max-height: 400px; /* Slightly smaller image on laptops */
+  }
 }
