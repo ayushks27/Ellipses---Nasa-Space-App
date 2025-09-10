@@ -31,7 +31,7 @@ export default function Home() {
       <Sidebar />
       <SearchBar />
       <ThreeScene />
-      <WelcomeMessage message="Welcome to the Nasa Space App!" />
+      <WelcomeMessage message="Welcome to the Ellipses!" />
     </div>
   );
 }
